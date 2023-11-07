@@ -40,9 +40,7 @@ const { name, number } = newContact;
     const id = nanoid();
 
   
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, {id, name, number}],
-    }));
+  
 
      this.setState(
        prevState => ({
