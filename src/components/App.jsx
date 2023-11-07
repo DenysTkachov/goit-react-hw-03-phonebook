@@ -10,6 +10,17 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+    if (savedContacts) {
+      this.setState({ contacts: JSON.parse(savedContacts) });
+    }
+  }
+  
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+  }
+
   handleAddContact = (newContact) => {
 const { name, number } = newContact;
 
@@ -32,12 +43,30 @@ const { name, number } = newContact;
     this.setState(prevState => ({
       contacts: [...prevState.contacts, {id, name, number}],
     }));
+
+     this.setState(
+       prevState => ({
+         contacts: [...prevState.contacts, newContact],
+       }),
+       () => {
+         localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+       }
+     );
   };
 
   handleDeleteContact = id => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
+
+     this.setState(
+       prevState => ({
+         contacts: prevState.contacts.filter(contact => contact.id !== id),
+       }),
+       () => {
+         localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+       }
+     );
   };
 
   handleFilterChange = e => {
