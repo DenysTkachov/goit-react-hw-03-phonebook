@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ContactForm } from './ContactForm/ContactForm ';
-import { ContactList } from './ContactList/ContactList ';
+import { ContactForm } from './ContactForm/ContactForm';
+import { ContactList } from './ContactList/ContactList'; 
 import { Filter } from './Filter/Filter';
 import { nanoid } from 'nanoid';
 
@@ -16,13 +16,13 @@ export class App extends Component {
       this.setState({ contacts: JSON.parse(savedContacts) });
     }
   }
-  
+
   componentDidUpdate() {
-    localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   }
 
-  handleAddContact = (newContact) => {
-const { name, number } = newContact;
+  handleAddContact = newContact => {
+    const { name, number } = newContact;
 
     if (name.trim() === '' || number.trim() === '') {
       return;
@@ -38,33 +38,27 @@ const { name, number } = newContact;
     }
 
     const id = nanoid();
+    const updatedContacts = [...this.state.contacts, { id, name, number }];
 
-  
-  
-
-     this.setState(
-       prevState => ({
-         contacts: [...prevState.contacts, newContact],
-       }),
-       () => {
-         localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-       }
-     );
+    this.setState(
+      {
+        contacts: updatedContacts,
+      },
+      () => {
+        localStorage.setItem('contacts', JSON.stringify(updatedContacts));
+      }
+    );
   };
 
   handleDeleteContact = id => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-    }));
-
-     this.setState(
-       prevState => ({
-         contacts: prevState.contacts.filter(contact => contact.id !== id),
-       }),
-       () => {
-         localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-       }
-     );
+    this.setState(
+      prevState => ({
+        contacts: prevState.contacts.filter(contact => contact.id !== id),
+      }),
+      () => {
+        localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      }
+    );
   };
 
   handleFilterChange = e => {
@@ -93,4 +87,3 @@ const { name, number } = newContact;
     );
   }
 }
-
