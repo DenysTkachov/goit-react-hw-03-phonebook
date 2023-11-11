@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
+
 
 export class ContactForm extends Component {
   state = {
@@ -23,7 +23,6 @@ export class ContactForm extends Component {
     }
 
     const newContact = {
-      id: nanoid(),
       name,
       number,
     };
